@@ -1,0 +1,43 @@
+import java.util.Arrays;
+
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        // Create a copy of the original array to track indices after sorting
+        int[] arr = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            arr[i] = nums[i];
+        }
+        // Sort the nums array to apply the two-pointer technique
+        Arrays.sort(nums);
+        // Two pointer
+        int start = 0;
+        int last = nums.length - 1;
+        
+        while (start < last) {
+            int sum = nums[start] + nums[last];
+            if (sum == target) {
+                // Found the solution, now find the original indices
+                int firstNum = nums[start];
+                int secondNum = nums[last];
+                int[] res = new int[2];
+                
+                // Search for the indices of the two numbers in the original array
+                for (int i = 0; i < arr.length; i++) {
+                    if (arr[i] == firstNum && res[0] == 0) {
+                        res[0] = i;
+                    }
+                    if (arr[i] == secondNum && res[1] == 0 && res[0] != i) {
+                        res[1] = i;
+                    }
+                }
+                return res;  // Return the original indices
+            } else if (sum < target) {
+                start++;  // Move the start pointer to the right
+            } else {
+                last--;   // Move the last pointer to the left
+            }
+        }
+        
+        return new int[] {}; 
+    }
+}
